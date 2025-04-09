@@ -95,22 +95,8 @@ jobs:
 
   create-emulation-root:
     name: Create Emulation Root
-    runs-on: ${{ matrix.runner }}
+    runs-on: windows-latest
     needs: [build-apiset-dumper]
-    strategy:
-      fail-fast: false
-      matrix:
-        platform:
-          - Windows 2025
-          - Windows 2022
-          - Windows 2019
-        include:
-          - platform: Windows 2025
-            runner: windows-2025
-          - platform: Windows 2022
-            runner: windows-2022
-          - platform: Windows 2019
-            runner: windows-2019
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -139,7 +125,7 @@ jobs:
       - name: Upload Artifacts
         uses: pyTooling/upload-artifact@v4
         with:
-          name: ${{ matrix.platform }} Emulation Root
+          name: Windows Emulation Root
           path: "*"
           working-directory: root
           retention-days: 1
@@ -271,10 +257,6 @@ jobs:
         emulator:
           - Unicorn
           - Icicle
-        emulation-root:
-          - Windows 2025
-          - Windows 2022
-          - Windows 2019
         configuration:
           - Debug
           - Release
@@ -329,7 +311,7 @@ jobs:
       - name: Download Emulation Root
         uses: pyTooling/download-artifact@v4
         with:
-          name: ${{ matrix.emulation-root }} Emulation Root
+          name: Windows Emulation Root
           path: build/${{matrix.preset}}/artifacts/root
 
       - name: Copy Test Sample
@@ -355,10 +337,6 @@ jobs:
         emulator:
           - Unicorn
           - Icicle
-        emulation-root:
-          - Windows 2025
-          - Windows 2022
-          - Windows 2019
         configuration:
           - Debug
           - Release
@@ -394,7 +372,7 @@ jobs:
       - name: Download Emulation Root
         uses: pyTooling/download-artifact@v4
         with:
-          name: ${{ matrix.emulation-root }} Emulation Root
+          name: Windows Emulation Root
           path: build/${{matrix.preset}}/artifacts/root
 
       - name: Copy Test Sample
